@@ -7,47 +7,37 @@ from .models import City
 
 def index(request):
     API_KEY = config("API_KEY")
-    city = "Kars"
-    u_city=request.POST.get("name")
+    city = "Erzurum"
+    u_city = request.POST.get("name")
+    
     if u_city:
-           url =f"https://api.openweathermap.org/data/2.5/weather?q={u_city}&appid={API_KEY}&units=metric"
-           response = requests.get(url)
-           print(response.ok)
-           
-           if response.ok:
-               content.response.json()
-               r_city = content["name"]
-               if City.objects.filter(name=r_city):
-                    messages.warning(request,"City already exists")
-               else:
-                  City.objects.create(name=r_city)
-           else:
-               messages.warning(request,"There in no city")
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={u_city}&appid={API_KEY}&units=metric"
+        response = requests.get(url)
+        print(response.ok)
+        
+        if response.ok:
+            content = response.json()
+            r_city = content["name"]
+            if City.objects.filter(name=r_city):
+                messages.warning(request, "City already exists!")
+            else:
+                City.objects.create(name=r_city)
             
-            
-            
-            
-            
-            
-    url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+        else:
+            messages.warning(request, "There is no city")
+    
+    
+    
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
     response = requests.get(url)
-    #? We converted the incoming data to python dictionary format 👇
     content = response.json()
-    # print(response) #! 👉 <Response [200]>
-    # # pprint(content)
-    # pprint(content["name"])
-    # pprint(content["main"]["temp"])
-    # pprint(content["weather"][0]["description"])
-    # pprint(content["weather"][0]["icon"])
-    
-    context = {
-        'city': content['name'],
-        'temp': content['main']['temp'],
-        'icon': content['weather'][0]['icon'],
-        'desc':content['weather'][0]['description'],
-    
-    }
 
+
+    context = {
+        "city" : content["name"],
+        "temp" : content["main"]["temp"],
+        "icon" : content["weather"][0]["icon"],
+        "desc" : content["weather"][0]["description"]
+    }
     
-    return render(request, 'weatherapp/index.html',context)
-  
+    return render(request, 'weatherapp/index.html', context)

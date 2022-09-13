@@ -25,19 +25,23 @@ def index(request):
             
         else:
             messages.warning(request, "There is no city")
-    
-    
-    
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
-    response = requests.get(url)
-    content = response.json()
+    city_data=[]
+    cities = City.objects.all()
+    for city in cities:
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
+        response = requests.get(url)
+        content = response.json()
+        data = {
+             "city" : content["name"],
+             "temp" : content["main"]["temp"],
+             "icon" : content["weather"][0]["icon"],
+             "desc" : content["weather"][0]["description"]
+        }
+        city_data.append(data)
 
 
     context = {
-        "city" : content["name"],
-        "temp" : content["main"]["temp"],
-        "icon" : content["weather"][0]["icon"],
-        "desc" : content["weather"][0]["description"]
+       "city_data":city_data
     }
     
     return render(request, 'weatherapp/index.html', context)

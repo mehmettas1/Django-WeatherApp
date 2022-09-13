@@ -1,5 +1,5 @@
-let element = document.querySelector('.message');
+// let element = document.querySelector('.message');
 
-setTimeout(function () {
-  element.style.display = 'none';
-}, 3000);
+// setTimeout(function () {
+//   element.style.display = 'none';
+// }, 3000);

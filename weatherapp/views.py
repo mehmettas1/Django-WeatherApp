@@ -6,16 +6,17 @@ from pprint import pprint
 def index(request):
     API_KEY = config("API_KEY")
     city = "Kars"
-    url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}"
+
+    url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&uni"
     response = requests.get(url)
     #? We converted the incoming data to python dictionary format 👇
     content = response.json()
-    print(response) #! 👉 <Response [200]>
-    # pprint(content)
-    pprint(content["name"])
-    pprint(content["main"]["temp"])
-    pprint(content["weather"][0]["description"])
-    pprint(content["weather"][0]["icon"])
+    # print(response) #! 👉 <Response [200]>
+    # # pprint(content)
+    # pprint(content["name"])
+    # pprint(content["main"]["temp"])
+    # pprint(content["weather"][0]["description"])
+    # pprint(content["weather"][0]["icon"])
     
     context = {
         'city': content['name'],

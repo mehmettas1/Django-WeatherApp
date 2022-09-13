@@ -8,6 +8,14 @@
 </head>
 <body>
     <h1>Weather App</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="name">
+        <input type="submit" value="add_city">
+    </form>
+    <br>
+    <hr>
+
     {{city}} <br>
     {{temp}} <br>
     <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt=""> <br>

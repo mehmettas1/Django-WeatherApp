@@ -1,3 +1,5 @@
+{% load static%}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,11 +27,11 @@
         <input type="submit" value="add_city">
     </form>
     <br><hr>
-
-    {{city}} <br>
-    {{temp}} <br>
-    <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" alt=""> <br>
-    {{desc}} <br>
-
+    {% for i in city_data  %}
+        {{i.city}} <br>
+        {{i.temp}}&#8451<br>
+        <img src="http://openweathermap.org/img/wn/{{i.icon}}@2x.png" alt=""> <br>
+        {{i.desc}} <br>
+    {% endfor %}
 </body>
 </html>
